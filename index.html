@@ -148,25 +148,26 @@ h1 {
   margin-left:auto; margin-right:auto;
 }
 .btn:hover { filter:brightness(1.13) drop-shadow(0 2px 8px #7f5bff22); }
+
+/* KART SEÇİM: F L E X */
 .deck {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-end;
-  gap: 3vw;
-  margin: 32px auto 18px;
+  align-content: flex-start;
+  gap: 24px 28px;
+  width: 100%;
+  max-width: 1150px;
+  margin: 32px auto 18px auto;
+  min-height: 370px;
 }
-@media (max-width: 700px) {
-  .deck {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 22px 0;
-    width: 100%;
-    max-width: 320px;
-    margin: 24px auto 10px auto;
-  }
+@media (max-width:900px){
+  .deck {gap: 18px 13px; max-width: 97vw; min-height: 0;}
 }
+@media (max-width:600px){
+  .deck {gap: 10px 6px;}
+}
+
 .tarot-card {
   background: none!important;
   box-shadow: none!important;
@@ -179,6 +180,7 @@ h1 {
   filter: drop-shadow(0 1px 9px #08071744);
   position: relative;
   perspective: 600px;
+  margin-bottom: 0;
 }
 .tarot-card.open, .tarot-card.selected { cursor:default; }
 .tarot-card.selected:not(.open) {
@@ -539,7 +541,7 @@ function renderDeck(){
   deck.innerHTML='';
   let cardCount = tarotCards.length;
   let isMobile = window.innerWidth <= 700;
-  let cardW = isMobile ? Math.max(window.innerWidth*0.75,90) : Math.max(Math.min((window.innerWidth*0.85-(3*cardCount))/cardCount, 190),70);
+  let cardW = isMobile ? Math.max(window.innerWidth*0.27,90) : Math.max(Math.min((window.innerWidth*0.85-(3*cardCount))/cardCount, 190),70);
   tarotCards.forEach((c,i)=>{
     const sel=selected.includes(i);
     const div=document.createElement('div');
