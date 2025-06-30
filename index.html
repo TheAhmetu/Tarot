@@ -7,363 +7,74 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
 body {
-  margin: 0; padding: 0;
-  min-height: 100vh;
+  margin: 0; padding: 0; min-height: 100vh;
   background: linear-gradient(135deg, #0b0518 0%, #0b0a21 40%, #181b36 100%);
   font-family: 'Montserrat', Arial, sans-serif;
 }
 .hidden { display: none !important; }
 .lang-popup-back {
   position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh;
-  background:rgba(12,8,22,0.91);
-  display:flex; align-items:center; justify-content:center;
+  background:rgba(12,8,22,0.91); display:flex; align-items:center; justify-content:center;
 }
 .lang-popup {
-  background:#211836;
-  padding:36px 32px 38px 32px;
-  border-radius:18px;
-  box-shadow:0 4px 34px #8b7edfa6, 0 1px 8px #0004;
-  max-width:95vw;
-  text-align:center;
-  display:flex; flex-direction:column; align-items:center;
-  animation:fadein .7s;
+  background:#211836; padding:36px 32px 38px 32px; border-radius:18px;
+  box-shadow:0 4px 34px #8b7edfa6, 0 1px 8px #0004; max-width:95vw; text-align:center;
+  display:flex; flex-direction:column; align-items:center; animation:fadein .7s;
 }
 @keyframes fadein {from{opacity:0;transform:scale(.93);}to{opacity:1;transform:scale(1);}}
-.lang-popup h2{
-  color:#ffeca7;
-  font-family:'Playfair Display',serif;
-  font-size:1.7em;
-  margin-bottom:22px;
-}
-.lang-choices{
-  display:flex; gap:26px; margin-top:18px; margin-bottom:7px;
-}
+.lang-popup h2{ color:#ffeca7; font-family:'Playfair Display',serif; font-size:1.7em; margin-bottom:22px;}
+.lang-choices{ display:flex; gap:26px; margin-top:18px; margin-bottom:7px;}
 .lang-btn{
   background:linear-gradient(120deg,#362e50 65%,#4e4094 100%);
   color:#f7ecd1; font-size:1.18em; border-radius:13px;
-  border:2px solid #534482;
-  padding:20px 32px 18px 32px;
+  border:2px solid #534482; padding:20px 32px 18px 32px;
   cursor:pointer; min-width:120px; outline:none;
   display:flex; flex-direction:column; align-items:center;
-  box-shadow:0 2px 11px #3e304588;
-  font-weight:700; transition:filter .15s,box-shadow .15s;
+  box-shadow:0 2px 11px #3e304588; font-weight:700;
+  transition:filter .15s,box-shadow .15s;
 }
-.lang-btn:hover{
-  filter:brightness(1.1) drop-shadow(0 1px 8px #d3c3ff44);
-  border-color:#9c88ff;
-}
+.lang-btn:hover{ filter:brightness(1.1) drop-shadow(0 1px 8px #d3c3ff44); border-color:#9c88ff;}
 .lang-flag{font-size:2.6em;display:block;margin-bottom:10px;}
-.lang-popup-desc{
-  color:#efdbaf; font-size:1.09em;
-  margin:8px auto 2px auto; max-width:340px;line-height:1.45;
-}
-#lang-switcher {
-  position:fixed; top:21px; right:30px; z-index:1000;
-  background:#23202bfa; color:#ffeec4;
-  border-radius:16px; padding:9px 21px 8px 16px;
-  font-size:1.1em; font-weight:600; letter-spacing:.06em;
-  cursor:pointer; border:2px solid #544673;
-  box-shadow:0 1px 8px #2e254188;
-  display:flex;align-items:center;gap:11px;
+.lang-popup-desc{ color:#efdbaf; font-size:1.09em; margin:8px auto 2px auto; max-width:340px;line-height:1.45;}
+#lang-switcher { position:fixed; top:21px; right:30px; z-index:1000;
+  background:#23202bfa; color:#ffeec4; border-radius:16px; padding:9px 21px 8px 16px;
+  font-size:1.1em; font-weight:600; letter-spacing:.06em; cursor:pointer; border:2px solid #544673;
+  box-shadow:0 1px 8px #2e254188; display:flex;align-items:center;gap:11px;
   transition:background .14s,border .13s;
 }
 #lang-switcher:hover {background:#524980e7;border-color:#ffedb6;}
 @media (max-width:700px){ #lang-switcher{top:9px;right:9px;font-size:1em;padding:8px 13px 8px 10px;}}
-/* ... aşağıda diğer stiller aynı şekilde devam ediyor */
 .main-content { max-width:1200px; margin:auto; padding-bottom:50px; }
-h1 {
-  color: #ffe9a8;
-  font-family: 'Playfair Display', serif;
-  font-size: 2.7rem;
-  margin-top:45px;
-  letter-spacing:2.5px;
+h1 { color: #ffe9a8; font-family: 'Playfair Display', serif; font-size: 2.7rem; margin-top:45px; letter-spacing:2.5px;
   background: linear-gradient(90deg, #ffecb3, #ffdf95 60%, #ffe179 100%);
   background-clip: text; -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; text-fill-color: transparent;
   text-shadow:0 8px 40px #ffefbe33, 0 2px 6px #6c5a2a33;
 }
-.giris-aciklama {
-  color: #fbeec8;
-  font-size: 1.25em;
-  margin: 24px auto 35px auto;
-  max-width: 510px;
-  background: #201a24d8;
-  border-radius: 14px;
-  padding: 18px 23px;
-  text-align: center;
-  box-shadow: 0 1px 8px #554e3559;
-  line-height: 1.6;
-  letter-spacing: .02em;
+.giris-aciklama { color: #fbeec8; font-size: 1.25em; margin: 24px auto 35px auto; max-width: 510px;
+  background: #201a24d8; border-radius: 14px; padding: 18px 23px; text-align: center;
+  box-shadow: 0 1px 8px #554e3559; line-height: 1.6; letter-spacing: .02em;
 }
-.giris-secimler {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-bottom: 36px;
-  flex-wrap: wrap;
+.giris-secimler { display: flex; justify-content: center; gap: 24px; margin-bottom: 36px; flex-wrap: wrap; }
+.giris-kutu { background: linear-gradient(125deg,#2a2237 68%,#443073 100%); color: #ffe9a8; border-radius: 17px;
+  padding: 34px 22px 30px 22px; font-size: 1.2em; font-weight: bold; min-width: 200px; min-height:120px;
+  max-width: 300px; box-shadow: 0 2px 17px #342d4641,0 1px 5px #fff1; cursor: pointer; text-align: center;
+  letter-spacing:.5px; position:relative; transition:box-shadow .15s, filter .18s, background .13s;
+  border:2.2px solid #3c3158; outline:none; user-select:none;
 }
-.giris-kutu {
-  background: linear-gradient(125deg,#2a2237 68%,#443073 100%);
-  color: #ffe9a8;
-  border-radius: 17px;
-  padding: 34px 22px 30px 22px;
-  font-size: 1.2em;
-  font-weight: bold;
-  min-width: 200px; min-height:120px;
-  max-width: 300px;
-  box-shadow: 0 2px 17px #342d4641,0 1px 5px #fff1;
-  cursor: pointer;
-  text-align: center;
-  letter-spacing:.5px;
-  position:relative;
-  transition:box-shadow .15s, filter .18s, background .13s;
-  border:2.2px solid #3c3158;
-  outline:none;
-  user-select:none;
-}
-.giris-kutu:not(.disabled):hover {
-  background: linear-gradient(125deg,#5a4386 68%,#8870c6 100%);
-  box-shadow: 0 4px 20px #9e7be040,0 1px 8px #eeddbe3a;
-  filter: brightness(1.09);
-}
+.giris-kutu:not(.disabled):hover { background: linear-gradient(125deg,#5a4386 68%,#8870c6 100%);
+  box-shadow: 0 4px 20px #9e7be040,0 1px 8px #eeddbe3a; filter: brightness(1.09);}
 .giris-kutu .emoji {font-size:2em; display:block; margin-bottom:10px;}
-.giris-kutu.disabled {
-  background: linear-gradient(120deg,#2a223755 70%,#383052 100%);
-  color:#d5c7a7cc;
-  cursor: not-allowed;
-  filter: grayscale(0.33) opacity(0.8);
-  border:2.2px dashed #574e66;
-}
-.giris-kutu .premium-etiket {
-  position:absolute; top:11px; right:12px;
+.giris-kutu.disabled { background: linear-gradient(120deg,#2a223755 70%,#383052 100%);
+  color:#d5c7a7cc; cursor: not-allowed; filter: grayscale(0.33) opacity(0.8); border:2.2px dashed #574e66;}
+.giris-kutu .premium-etiket { position:absolute; top:11px; right:12px;
   background: linear-gradient(90deg,#f9e9b2,#fae79e 70%,#e8cf8b);
-  color: #6d5b19;
-  font-size:.88em;
-  border-radius:8px;
-  padding:3px 11px 4px 9px;
-  font-weight:600;
-  letter-spacing:.03em;
+  color: #6d5b19; font-size:.88em; border-radius:8px; padding:3px 11px 4px 9px; font-weight:600; letter-spacing:.03em;
   box-shadow:0 1px 5px #b99d2a33;
 }
-@media (max-width:750px){
-  .giris-secimler {gap:13px;}
-  .giris-kutu {padding:22px 7px 19px 7px;font-size:1.05em;min-width:140px;}
-}
-@media (max-width:600px){
-  h1{font-size:1.15rem;}
-  .main-content{padding-bottom:15px;}
-  .giris-aciklama{font-size:.99em;max-width:98vw;}
-  .giris-kutu{font-size:.93em;min-width:110px;}
-}
-.form-area, #selectArea, #resultArea { margin-top:30px; }
-.input-row {
-  margin-bottom: 10px;
-  width: 100%;
-  max-width: 350px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.form-area label {
-  color:#ffedc0;
-  font-size:18px;
-  display:block;
-  text-align:left;
-  margin-bottom:2px;
-  margin-left:4px;
-  font-weight:600;
-  letter-spacing: .01em;
-}
-.form-area input {
-  font-size: 23px;
-  border-radius: 12px;
-  border: none;
-  padding: 15px 20px;
-  outline: none;
-  width: 100%;
-  background: #18122d;
-  color: #ffedc0;
-  box-shadow: 0 1px 15px #1e164877;
-  margin-bottom: 0;
-}
-.form-area input[type=date], .form-area input[type=time] { color: #dac490; }
-.btn {
-  padding: 20px 56px;
-  font-size: 26px;
-  margin-top:32px;
-  background: linear-gradient(90deg,#8f78f7,#4322a9 80%,#be84ff);
-  color: #fffde0;
-  border: none; border-radius: 17px;
-  cursor:pointer;
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-weight:bold;
-  letter-spacing:.8px;
-  box-shadow:0 6px 20px #59459d66,0 1px 3px #fff2;
-  transition: filter .17s;
-  width: 100%;
-  max-width: 350px;
-  display: block;
-  margin-left:auto; margin-right:auto;
-}
-.btn:hover { filter:brightness(1.13) drop-shadow(0 2px 8px #7f5bff22); }
-.deck {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
-  gap: 24px 28px;
-  width: 100%;
-  max-width: 1150px;
-  margin: 32px auto 18px auto;
-  min-height: 370px;
-}
-@media (max-width:900px){
-  .deck {gap: 18px 13px; max-width: 97vw; min-height: 0;}
-}
-@media (max-width:600px){
-  .deck {gap: 10px 6px;}
-}
-
-.tarot-card {
-  background: none!important;
-  box-shadow: none!important;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: none;
-  transition: transform .18s cubic-bezier(.41,1.26,.39,1.05), box-shadow .18s;
-  filter: drop-shadow(0 1px 9px #08071744);
-  position: relative;
-  perspective: 600px;
-  margin-bottom: 0;
-}
-.tarot-card.open, .tarot-card.selected { cursor:default; }
-.tarot-card.selected:not(.open) {
-  box-shadow: 0 0 12px #ecd785ee, 0 0 26px #f3e7ab55;
-  transform: scale(1.07) rotate(-2deg);
-  filter: brightness(1.07) drop-shadow(0 1px 11px #f1d27177);
-}
-.tarot-img-box {
-  width: 100%;
-  aspect-ratio: 2/3;
-  max-width: 190px;
-  min-width: 70px;
-  background: #000;
-  border-radius: 13px;
-  box-shadow: 0 4px 16px #39236177, 0 1px 8px #26223266;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  position: relative;
-  border: 1.2px solid #524173;
-}
-.tarot-card img, .tarot-back-img {
-  width: 100%; height: 100%;
-  object-fit: contain !important;
-  object-position: center center;
-  background: #000;
-  display: block;
-  border-radius: 13px;
-  transition: filter .13s, opacity .16s;
-  filter:brightness(.98);
-}
-.tarot-label {
-  font-size: 22px;
-  margin: 16px 0 0;
-  font-weight: bold; color: #ffeaae;
-  text-shadow: 0 1px 2px #19162c, 0 2px 12px #7e5b2b33;
-  text-align: center;
-  width: 100%;
-  font-family:'Playfair Display', serif;
-  letter-spacing:.6px;
-}
-.result-area-outer {
-  display: flex; flex-direction: column;
-  align-items: center; width: 100%;
-}
-.result-title {
-  color:#fbecc6;
-  font-size: 37px;
-  font-weight: bold;
-  margin-bottom: 42px;
-  margin-top: 0;
-  text-align: center;
-  width: 100%;
-  font-family: 'Playfair Display',serif;
-  letter-spacing:.7px;
-  background: linear-gradient(90deg,#ecd494 20%,#fffbe3 70%,#ebd18e 100%);
-  background-clip: text; -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; text-fill-color: transparent;
-  text-shadow:0 2px 13px #e3c86b55,0 1px 3px #553c2b22;
-}
-.result-area-inner {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(190px,1fr));
-  gap: 34px;
-  justify-content: center;
-  align-items: start;
-  width: 100%;
-  max-width: 1100px;
-  margin: auto;
-  padding-bottom: 28px;
-}
-@media (max-width: 1000px) {
-  .result-area-inner {
-    grid-template-columns: 1fr;
-    gap: 22px;
-    max-width: 340px;
-    padding-bottom:10px;
-  }
-}
-.card-meaning {
-  margin:20px 10px 0 10px;
-  color:#fff6e0;
-  font-size:20px;
-  line-height:1.62;
-  text-align: center;
-  font-family:'Montserrat',Arial,sans-serif;
-  min-height:70px;
-  letter-spacing:.08em;
-  border-radius:9px;
-  padding: 7px 5px 7px 5px;
-}
-.summary-yorum {
-  background: #14111cdd;
-  margin: 42px auto 0 auto;
-  color: #f3e5bb;
-  font-size: 1.25em;
-  line-height: 1.75;
-  max-width: 830px;
-  border-radius: 18px;
-  padding: 32px 36px 35px 34px;
-  box-shadow: 0 4px 22px #2f2436a1, 0 1px 5px #eee2bb19;
-  text-align: left;
-  letter-spacing:.035em;
-}
-.hint-burc {color:#d5caad;font-size:20px;margin:28px 0 12px;}
-.flip-anim {
-  transition:transform 0.59s cubic-bezier(.47,1.55,.37,.94);
-  transform-style: preserve-3d;
-  position: relative;
-}
-.flipped {
-  transform: rotateY(180deg);
-}
-.tarot-img-box .front,
-.tarot-img-box .back {
-  position: absolute;
-  top:0; left:0; width:100%; height:100%;
-  backface-visibility: hidden;
-  border-radius:13px;
-}
-.tarot-img-box .back {
-  z-index:2;
-}
-.tarot-img-box .front {
-  transform: rotateY(180deg);
-  z-index: 1;
+@media (max-width:750px){ .giris-secimler {gap:13px;} .giris-kutu {padding:22px 7px 19px 7px;font-size:1.05em;min-width:140px;}}
+@media (max-width:600px){ h1{font-size:1.15rem;} .main-content{padding-bottom:15px;}
+  .giris-aciklama{font-size:.99em;max-width:98vw;} .giris-kutu{font-size:.93em;min-width:110px;}
 }
 </style>
 </head>
@@ -414,26 +125,6 @@ h1 {
       <span class="premium-etiket">Premium Yakında</span>
     </div>
   </div>
-  <div class="form-area hidden" id="formArea">
-    <div class="input-row">
-      <label for="fullName" id="labelName">Ad Soyad</label>
-      <input type="text" id="fullName" placeholder="Ad Soyad">
-    </div>
-    <div class="input-row">
-      <label for="birthDate" id="labelDate">Doğum Tarihi</label>
-      <input type="date" id="birthDate">
-    </div>
-    <div class="input-row">
-      <label for="birthTime" id="labelTime">Doğum Saati (opsiyonel)</label>
-      <input type="time" id="birthTime" placeholder="Doğum Saati (opsiyonel)">
-    </div>
-    <button id="devamBtn" class="btn">Devam Et 🧿</button>
-  </div>
-  <div id="selectArea" class="hidden">
-    <div id="phaseTitle" style="color:#ffecc9;font-size:29px;margin-bottom:26px;text-shadow:0 1px 12px #232a3b;">Geçmiş için bir kart seç</div>
-    <div id="deck" class="deck"></div>
-  </div>
-  <div id="resultArea" class="result-area hidden"></div>
 </div>
 <script>
 const dil = {
@@ -468,18 +159,19 @@ const dil = {
     futureMsg:"Message from the universe: Move fearlessly, trust your intuition and power; love, abundance and wisdom await you!"
   }
 };
-let curLang = localStorage.getItem("tarotLang") || "tr";
-let pageLoaded = false;
+let curLang = null;
 function setLang(lang){
   curLang = lang;
   localStorage.setItem("tarotLang",lang);
   applyLang();
-  // Dil seçimi sonrası popup'ı tamamen kaldır
+  // Pop-up'ı DOM'dan çıkar (tüm cihazlarda kesin kaybolur)
   let popup=document.getElementById("langPopup");
   popup.classList.add("hidden");
   popup.style.display = "none";
+  popup.setAttribute("aria-hidden","true");
+  document.body.focus(); // Mobilde odak kayması için
+  setTimeout(()=>{ if(popup) popup.remove(); }, 700); // DOM'dan tamamen sil
   document.getElementById("lang-switcher").style.display = "flex";
-  if(!pageLoaded){pageLoaded=true;}
 }
 function toggleLang(){
   curLang = curLang==="tr" ? "en" : "tr";
@@ -498,34 +190,22 @@ function applyLang(){
   secimler[1].querySelector(".premium-etiket").textContent = d.soon;
   secimler[2].querySelector(".kart-sec-acilim").textContent = d.kariyer;
   secimler[2].querySelector(".premium-etiket").textContent = d.soon;
-  document.getElementById("labelName").textContent = d.labelName;
-  document.getElementById("fullName").placeholder = d.labelName;
-  document.getElementById("labelDate").textContent = d.labelDate;
-  document.getElementById("labelTime").textContent = d.labelTime;
-  document.getElementById("birthTime").placeholder = d.labelTime;
-  document.getElementById("devamBtn").textContent = d.devam;
-  if(document.getElementById("phaseTitle")) document.getElementById("phaseTitle").textContent = d.selectPhase[phase]||d.resultsTitle;
-  if(document.getElementById("resultArea") && !document.getElementById("resultArea").classList.contains("hidden")) showResults();
 }
 window.addEventListener('DOMContentLoaded', ()=>{
-  setTimeout(()=>{
-    if(localStorage.getItem("tarotLang")){
-      document.getElementById("langPopup").classList.add("hidden");
-      document.getElementById("langPopup").style.display = "none";
-      document.getElementById("lang-switcher").style.display = "flex";
-      applyLang();
-    } else {
-      document.getElementById("langPopup").classList.remove("hidden");
-      document.getElementById("langPopup").style.display = "flex";
-      document.getElementById("lang-switcher").style.display = "none";
-    }
-  },100);
+  if(localStorage.getItem("tarotLang")){
+    curLang = localStorage.getItem("tarotLang");
+    document.getElementById("langPopup").classList.add("hidden");
+    document.getElementById("langPopup").style.display = "none";
+    document.getElementById("lang-switcher").style.display = "flex";
+    applyLang();
+  } else {
+    curLang = "tr";
+    document.getElementById("langPopup").classList.remove("hidden");
+    document.getElementById("langPopup").style.display = "flex";
+    document.getElementById("lang-switcher").style.display = "none";
+    applyLang();
+  }
 });
-document.getElementById('secim-3kart').onclick = function() {
-  document.getElementById('girisSecim').classList.add('hidden');
-  document.getElementById('formArea').classList.remove('hidden');
-};
-// --- (Kartlar ve devamı öncekiyle aynı şekilde devam ediyor) ---
 </script>
 </body>
 </html>
