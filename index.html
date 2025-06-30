@@ -78,7 +78,7 @@ h1 {
   border:2.2px dashed #574e66;
 }
 .giris-kutu .premium-etiket {
-  position:absolute; top:11px; right:12px;
+  position:absolute; top:41px; right:12px;
   background: linear-gradient(90deg,#f9e9b2,#fae79e 70%,#e8cf8b);
   color: #6d5b19;
   font-size:.88em;
@@ -87,16 +87,19 @@ h1 {
   font-weight:600;
   letter-spacing:.03em;
   box-shadow:0 1px 5px #b99d2a33;
+  z-index:2;
 }
 @media (max-width:750px){
   .giris-secimler {gap:13px;}
-  .giris-kutu {padding:22px 7px 19px 7px;font-size:1.05em;min-width:140px;}
+  .giris-kutu {padding:22px 7px 38px 7px;font-size:1.05em;min-width:140px;}
+  .giris-kutu .premium-etiket {top:27px;}
 }
 @media (max-width:600px){
   h1{font-size:1.15rem;}
   .main-content{padding-bottom:15px;}
   .giris-aciklama{font-size:.99em;max-width:98vw;}
   .giris-kutu{font-size:.93em;min-width:110px;}
+  .giris-kutu .premium-etiket {top:17px;}
 }
 .form-area, #selectArea, #resultArea { margin-top:30px; }
 .input-row {
@@ -310,12 +313,56 @@ h1 {
   transform: rotateY(180deg);
   z-index: 1;
 }
+.langBtn {
+  position: fixed; top: 19px; right: 17px;
+  z-index: 1001; background: #241a35ec;
+  color: #ffecc6;
+  font-size: 1.13em; font-family:inherit;
+  padding: 8px 22px 10px 16px; border-radius:13px;
+  border:none; cursor:pointer; font-weight:600;
+  box-shadow:0 2px 10px #2b234877, 0 1px 3px #fff3;
+  transition:background .13s;
+  display: flex; align-items:center; gap: 7px;
+}
+.langBtn:hover { background:#463063; color:#fffde0;}
+#langPopupBG {
+  position:fixed; left:0; top:0; width:100vw; height:100vh;
+  background:rgba(26,19,35,0.77); z-index:1102;
+  display:none; align-items:center; justify-content:center;
+}
+#langPopup {
+  background:#20182b;
+  padding:36px 26px 33px 26px;
+  border-radius:17px;
+  text-align:center;
+  box-shadow:0 4px 24px #19113f82,0 1px 7px #fff4;
+  min-width:250px;
+}
+#langPopup h2 {color:#ffecc6;margin-bottom:22px;font-size:1.4em;}
+#langPopup .langSelBtn {
+  font-size:1.2em;
+  padding:13px 36px;
+  border-radius:10px;
+  margin: 8px 10px;
+  background: linear-gradient(90deg,#8f78f7,#4322a9 80%,#be84ff);
+  color: #fffde0; border:none; cursor:pointer; font-weight:600;
+  letter-spacing:.4px;
+}
+#langPopup .langSelBtn:hover {filter:brightness(1.14);}
 </style>
 </head>
 <body>
+<button class="langBtn" id="langChangeBtn"><span id="langBtnTxt">Dil</span></button>
+<div id="langPopupBG">
+  <div id="langPopup">
+    <h2>Choose Language / Dil Seçin</h2>
+    <button class="langSelBtn" id="langTr">Türkçe</button>
+    <button class="langSelBtn" id="langEn">English</button>
+  </div>
+</div>
 <div class="main-content">
-  <h1>✨ Hoş Geldiniz!</h1>
-  <div class="giris-aciklama">
+  <h1 id="siteTitle">✨ Hoş Geldiniz!</h1>
+  <div class="giris-aciklama" id="introText">
     <b>Tarot Falı ile geleceğinize ışık tutun.</b><br>
     Klasik tarot destesiyle, enerjinizi ve kaderinizi birlikte keşfedelim.<br>
     Şu anda <b>3 Kartlık Açılım</b> hizmetimiz açık. Diğer açılımlar çok yakında burada olacak!
@@ -323,30 +370,30 @@ h1 {
   <div id="girisSecim" class="giris-secimler">
     <div class="giris-kutu" id="secim-3kart" tabindex="0">
       <span class="emoji">🔮</span>
-      3 Kartlık Tarot Açılımı
+      <span id="secimText1">3 Kartlık Tarot Açılımı</span>
     </div>
     <div class="giris-kutu disabled" tabindex="-1">
       <span class="emoji">💞</span>
-      Aşk Açılımı
-      <span class="premium-etiket">Premium Yakında</span>
+      <span id="secimText2">Aşk Açılımı</span>
+      <span class="premium-etiket" id="premiumText">Premium Yakında</span>
     </div>
     <div class="giris-kutu disabled" tabindex="-1">
       <span class="emoji">💼</span>
-      Kariyer Açılımı
-      <span class="premium-etiket">Premium Yakında</span>
+      <span id="secimText3">Kariyer Açılımı</span>
+      <span class="premium-etiket" id="premiumText2">Premium Yakında</span>
     </div>
   </div>
   <div class="form-area hidden" id="formArea">
     <div class="input-row">
-      <label for="fullName">Ad Soyad</label>
+      <label id="labelName" for="fullName">Ad Soyad</label>
       <input type="text" id="fullName" placeholder="Ad Soyad">
     </div>
     <div class="input-row">
-      <label for="birthDate">Doğum Tarihi</label>
+      <label id="labelBirthDate" for="birthDate">Doğum Tarihi</label>
       <input type="date" id="birthDate">
     </div>
     <div class="input-row">
-      <label for="birthTime">Doğum Saati (opsiyonel)</label>
+      <label id="labelBirthTime" for="birthTime">Doğum Saati (opsiyonel)</label>
       <input type="time" id="birthTime" placeholder="Doğum Saati (opsiyonel)">
     </div>
     <button id="devamBtn" class="btn">Devam Et 🧿</button>
@@ -358,95 +405,245 @@ h1 {
   <div id="resultArea" class="result-area hidden"></div>
 </div>
 <script>
-// Açılım seçimi
+// --- DİL KODLARI ve DİL NESNELERİ ---
+const LANGS = { tr:"Türkçe", en:"English" };
+let LANG = (localStorage.getItem("LANG")||"tr");
+
+const ZODIAC_NAMES = {
+  tr: {
+    "Oğlak":"Oğlak", "Kova":"Kova", "Balık":"Balık", "Koç":"Koç", "Boğa":"Boğa", "İkizler":"İkizler",
+    "Yengeç":"Yengeç", "Aslan":"Aslan", "Başak":"Başak", "Terazi":"Terazi", "Akrep":"Akrep", "Yay":"Yay"
+  },
+  en: {
+    "Oğlak":"Capricorn", "Kova":"Aquarius", "Balık":"Pisces", "Koç":"Aries", "Boğa":"Taurus", "İkizler":"Gemini",
+    "Yengeç":"Cancer", "Aslan":"Leo", "Başak":"Virgo", "Terazi":"Libra", "Akrep":"Scorpio", "Yay":"Sagittarius"
+  }
+};
+
+const L = {
+  tr: {
+    siteTitle: "✨ Hoş Geldiniz!",
+    intro: "<b>Tarot Falı ile geleceğinize ışık tutun.</b><br>Klasik tarot destesiyle, enerjinizi ve kaderinizi birlikte keşfedelim.<br>Şu anda <b>3 Kartlık Açılım</b> hizmetimiz açık. Diğer açılımlar çok yakında burada olacak!",
+    secim1: "3 Kartlık Tarot Açılımı",
+    secim2: "Aşk Açılımı",
+    secim3: "Kariyer Açılımı",
+    premium: "Premium Yakında",
+    labelName: "Ad Soyad",
+    labelBirthDate: "Doğum Tarihi",
+    labelBirthTime: "Doğum Saati (opsiyonel)",
+    devam: "Devam Et 🧿",
+    phase: ["Geçmiş için bir kart seç", "Şimdiki zaman için bir kart seç", "Gelecek için bir kart seç", "Kartların ve yorumları:"],
+    card_result: "🃏 Çektiğin Kartlar ve Uzun Yorumlar",
+    burcGunes: "Güneş Burcunuz",
+    burcAy: "Ay Burcunuz",
+    burcEk: "Doğum saatinizi girerseniz ay burcunuza özel yorum da eklenir.",
+    summary: "Tarot Açılımı Özet Yorumun:",
+    evren: "Burçların etkisiyle birlikte bu süreçte ruhsal olarak güçlendiğin, hayatındaki büyük değişimi destekleyen ve kendine inancını tazeleyen bir enerji yayıyor. 🧿💫<br><br><b>Evrenin sana mesajı:</b> Korkusuzca ilerle, kendi iç sesini ve gücünü dinle; aşk, bolluk ve bilgelik seni bekliyor!"
+  },
+  en: {
+    siteTitle: "✨ Welcome!",
+    intro: "<b>Shed light on your future with Tarot Reading.</b><br>Let's discover your energy and destiny together with the classic tarot deck.<br>Currently, only the <b>3 Card Spread</b> is available. Other spreads will be coming soon!",
+    secim1: "3 Card Tarot Spread",
+    secim2: "Love Spread",
+    secim3: "Career Spread",
+    premium: "Premium Soon",
+    labelName: "Full Name",
+    labelBirthDate: "Date of Birth",
+    labelBirthTime: "Time of Birth (optional)",
+    devam: "Continue 🧿",
+    phase: ["Pick a card for the Past", "Pick a card for the Present", "Pick a card for the Future", "Cards and their meanings:"],
+    card_result: "🃏 Your Cards & Detailed Interpretations",
+    burcGunes: "Your Sun Sign",
+    burcAy: "Your Moon Sign",
+    burcEk: "If you enter your time of birth, you will get an additional Moon sign interpretation.",
+    summary: "Tarot Reading Summary:",
+    evren: "With the influence of your zodiac signs, this process gives you energy that strengthens you spiritually, supports big change in your life, and renews your self-confidence. 🧿💫<br><br><b>Message from the universe:</b> Move forward fearlessly, listen to your inner voice and strength; love, abundance and wisdom await you!"
+  }
+};
+// --- DİL POPUP ve DİL DEĞİŞİMİ ---
+function setLang(lang) {
+  LANG = lang;
+  localStorage.setItem("LANG", lang);
+  document.documentElement.lang = lang;
+  document.getElementById("siteTitle").innerHTML = L[lang].siteTitle;
+  document.getElementById("introText").innerHTML = L[lang].intro;
+  document.getElementById("secimText1").innerText = L[lang].secim1;
+  document.getElementById("secimText2").innerText = L[lang].secim2;
+  document.getElementById("secimText3").innerText = L[lang].secim3;
+  document.getElementById("premiumText").innerText = L[lang].premium;
+  document.getElementById("premiumText2").innerText = L[lang].premium;
+  document.getElementById("labelName").innerText = L[lang].labelName;
+  document.getElementById("labelBirthDate").innerText = L[lang].labelBirthDate;
+  document.getElementById("labelBirthTime").innerText = L[lang].labelBirthTime;
+  document.getElementById("devamBtn").innerText = L[lang].devam;
+  document.getElementById("phaseTitle").textContent = L[lang].phase[0];
+  document.getElementById("langBtnTxt").innerText = lang=="tr"?"Dil":"Language";
+  // Sonuç alanı görünüyorsa tekrar göster (burçları güncelle)
+  if(!document.getElementById("resultArea").classList.contains("hidden")) showResults();
+}
+document.getElementById("langChangeBtn").onclick = function(){
+  document.getElementById("langPopupBG").style.display="flex";
+};
+document.getElementById("langTr").onclick = function(){
+  setLang("tr");
+  document.getElementById("langPopupBG").style.display="none";
+};
+document.getElementById("langEn").onclick = function(){
+  setLang("en");
+  document.getElementById("langPopupBG").style.display="none";
+};
+// Sayfa ilk açılışta dili sor
+if(!localStorage.getItem("LANG_SELECTED")){
+  document.getElementById("langPopupBG").style.display="flex";
+  localStorage.setItem("LANG_SELECTED","1");
+}
+setLang(LANG);
+
+// --- ANA FONKSİYONALİTE ---
 document.getElementById('secim-3kart').onclick = function() {
   document.getElementById('girisSecim').classList.add('hidden');
   document.getElementById('formArea').classList.remove('hidden');
 };
-// Tarot kartları ve fonksiyonlar aynı şekilde devam
 const tarotBackIMG = "https://i.pinimg.com/1200x/de/6d/78/de6d78f74e682c255b17ba7b2a0b9922.jpg";
 const tarotCards = [
   {
-    name: "Aptal",
+    name: {tr:"Aptal",en:"The Fool"},
     img: "https://i.pinimg.com/1200x/95/75/b2/9575b2acd29bf516d8a7cf02402bb54a.jpg",
     meanings: {
-      past: "Geçmiş: Hayatında eskiye dair kaygı ve kısıtlamaları bırakma dönemi olmuş. Cesurca yeni başlangıçlara adım atmış, bazı riskler almış olabilirsin. Geçmişin yüklerinden arınmış ve içindeki çocuğu dinlemişsin.",
-      present: "Şimdi: Şu an sana sunulan fırsatları özgürce keşfetmeye açık bir ruh halindesin. Önünde yepyeni bir yol var ve içsel sesin seni yepyeni serüvenlere çağırıyor. Risk almayı dene ama sorumlulukları da unutma.",
-      future: "Gelecek: Seni bekleyen yepyeni başlangıçlar ve maceralar var! Hayatında hiç denemediğin kapılar açılacak. Korkusuzca hareket etmeye devam edersen, hayatına renk ve heyecan gelecek."
+      tr: {
+        past: "Geçmiş: Hayatında eskiye dair kaygı ve kısıtlamaları bırakma dönemi olmuş. Cesurca yeni başlangıçlara adım atmış, bazı riskler almış olabilirsin. Geçmişin yüklerinden arınmış ve içindeki çocuğu dinlemişsin.",
+        present: "Şimdi: Şu an sana sunulan fırsatları özgürce keşfetmeye açık bir ruh halindesin. Önünde yepyeni bir yol var ve içsel sesin seni yepyeni serüvenlere çağırıyor. Risk almayı dene ama sorumlulukları da unutma.",
+        future: "Gelecek: Seni bekleyen yepyeni başlangıçlar ve maceralar var! Hayatında hiç denemediğin kapılar açılacak. Korkusuzca hareket etmeye devam edersen, hayatına renk ve heyecan gelecek."
+      },
+      en: {
+        past: "Past: There has been a period of letting go of old anxieties and restrictions in your life. You may have boldly taken new steps and some risks. You have freed yourself from the burdens of the past and listened to your inner child.",
+        present: "Present: You are in a mindset open to freely exploring the opportunities presented to you. A brand new path lies ahead, and your inner voice is calling you to new adventures. Try taking risks but don't forget your responsibilities.",
+        future: "Future: Brand new beginnings and adventures await you! Doors you've never tried before will open in your life. If you keep acting fearlessly, your life will gain color and excitement."
+      }
     },
     emoji: "🤹‍♂️"
   },
   {
-    name: "Büyücü",
+    name: {tr:"Büyücü",en:"The Magician"},
     img: "https://i.pinimg.com/1200x/89/32/b8/8932b890833f0294c811e330687ae67b.jpg",
     meanings: {
-      past: "Geçmiş: Geçmişte yeteneklerini ve kaynaklarını aktif biçimde kullanmaya başlamışsın. Hayalini kurduğun bir şeyi hayata geçirmiş veya önemli bir girişimde bulunmuş olabilirsin.",
-      present: "Şimdi: Şu an, zihinsel gücünün ve konsantrasyonunun zirvesindesin. Fikirlerini gerçeğe dönüştürmek için mükemmel bir zaman. Elindeki imkanların farkına var!",
-      future: "Gelecek: İlerleyen dönemde istediğin her şeyi gerçekleştirebilme potansiyeline sahipsin. Hedeflerine ulaşmak için her şey sende mevcut; yeter ki niyet et ve harekete geç!"
+      tr: {
+        past: "Geçmiş: Geçmişte yeteneklerini ve kaynaklarını aktif biçimde kullanmaya başlamışsın. Hayalini kurduğun bir şeyi hayata geçirmiş veya önemli bir girişimde bulunmuş olabilirsin.",
+        present: "Şimdi: Şu an, zihinsel gücünün ve konsantrasyonunun zirvesindesin. Fikirlerini gerçeğe dönüştürmek için mükemmel bir zaman. Elindeki imkanların farkına var!",
+        future: "Gelecek: İlerleyen dönemde istediğin her şeyi gerçekleştirebilme potansiyeline sahipsin. Hedeflerine ulaşmak için her şey sende mevcut; yeter ki niyet et ve harekete geç!"
+      },
+      en: {
+        past: "Past: You have started to actively use your skills and resources. You may have realized a dream or undertaken an important initiative.",
+        present: "Present: You are at the peak of your mental strength and concentration. It's a perfect time to turn your ideas into reality. Be aware of what you have in hand!",
+        future: "Future: In the coming period, you have the potential to achieve anything you want. Everything you need to reach your goals is within you; just set your intention and take action!"
+      }
     },
     emoji: "🪄"
   },
   {
-    name: "Baş Rahibe",
+    name: {tr:"Baş Rahibe",en:"The High Priestess"},
     img: "https://i.pinimg.com/1200x/c1/36/04/c13604c1cf56137b891380da1a9eea49.jpg",
     meanings: {
-      past: "Geçmiş: Sezgilerinle hareket ettiğin, bilinmeyenlerin peşinden gittiğin bir dönem yaşamışsın. Derin bir içsel sorgulama ve manevi gelişim öne çıkıyor.",
-      present: "Şimdi: Şu an, bilinçaltın ve sezgilerin çok güçlü. Kararlarında sadece mantığı değil, iç sesini de mutlaka dinle. Biraz yalnız kalmak ve ruhunu dinlemek sana iyi gelebilir.",
-      future: "Gelecek: Yakın gelecekte içsel bilgeliğinle önemli sırları açığa çıkaracaksın. Sezgilerini takip edersen, beklenmedik fırsatlar önüne serilecek."
+      tr: {
+        past: "Geçmiş: Sezgilerinle hareket ettiğin, bilinmeyenlerin peşinden gittiğin bir dönem yaşamışsın. Derin bir içsel sorgulama ve manevi gelişim öne çıkıyor.",
+        present: "Şimdi: Şu an, bilinçaltın ve sezgilerin çok güçlü. Kararlarında sadece mantığı değil, iç sesini de mutlaka dinle. Biraz yalnız kalmak ve ruhunu dinlemek sana iyi gelebilir.",
+        future: "Gelecek: Yakın gelecekte içsel bilgeliğinle önemli sırları açığa çıkaracaksın. Sezgilerini takip edersen, beklenmedik fırsatlar önüne serilecek."
+      },
+      en: {
+        past: "Past: You have gone through a period where you acted with your intuition and chased the unknown. Deep inner questioning and spiritual development were prominent.",
+        present: "Present: Your subconscious and intuition are very strong right now. Listen to your inner voice as well as your logic in your decisions. Being alone for a while and listening to your soul may do you good.",
+        future: "Future: In the near future, you will reveal important secrets with your inner wisdom. If you follow your intuition, unexpected opportunities will appear."
+      }
     },
     emoji: "🌙"
   },
   {
-    name: "İmparatoriçe",
+    name: {tr:"İmparatoriçe",en:"The Empress"},
     img: "https://i.pinimg.com/1200x/2e/db/f2/2edbf2d51095e73034d467298b8c3ecd.jpg",
     meanings: {
-      past: "Geçmiş: Aile, sevgi ve bereket enerjisi geçmişinin temelini oluşturmuş. Yaratıcılık ve kendini ifade etme konusunda verimli bir süreç geçirmiş olabilirsin.",
-      present: "Şimdi: Hayatında büyüme, bolluk ve destek zamanı. Duygusal ve fiziksel açıdan kendini şımartabileceğin, doğayla bağlantı kurabileceğin bir dönemdesin.",
-      future: "Gelecek: Önünde bereket ve huzur dolu bir dönem var. Yeni bir aşk, ailede güzel gelişmeler ya da yaratıcı bir projenin başarıya ulaşması seni bekliyor."
+      tr: {
+        past: "Geçmiş: Aile, sevgi ve bereket enerjisi geçmişinin temelini oluşturmuş. Yaratıcılık ve kendini ifade etme konusunda verimli bir süreç geçirmiş olabilirsin.",
+        present: "Şimdi: Hayatında büyüme, bolluk ve destek zamanı. Duygusal ve fiziksel açıdan kendini şımartabileceğin, doğayla bağlantı kurabileceğin bir dönemdesin.",
+        future: "Gelecek: Önünde bereket ve huzur dolu bir dönem var. Yeni bir aşk, ailede güzel gelişmeler ya da yaratıcı bir projenin başarıya ulaşması seni bekliyor."
+      },
+      en: {
+        past: "Past: Family, love, and abundance have been the foundation of your past. You may have gone through a productive phase in creativity and self-expression.",
+        present: "Present: It's a time for growth, abundance, and support in your life. This is a period when you can pamper yourself emotionally and physically, and connect with nature.",
+        future: "Future: A period full of abundance and peace awaits you. A new love, good developments in the family, or a creative project's success is on the horizon."
+      }
     },
     emoji: "👑"
   },
   {
-    name: "İmparator",
+    name: {tr:"İmparator",en:"The Emperor"},
     img: "https://i.pinimg.com/1200x/33/c2/d4/33c2d42f970ae4f0c4ca0aac7d3e9a59.jpg",
     meanings: {
-      past: "Geçmiş: Düzen, disiplin ve otoriteyle yoğrulmuş bir geçmiş. Kuralları belirlemiş ve hayatını yapılandırmaya çalışmışsın.",
-      present: "Şimdi: Kararlarında sağlam ve kararlı olman gereken bir dönemdesin. Sorumluluklarını üstlenmekten çekinme. Güç seninle!",
-      future: "Gelecek: Kendi hayatının lideri olacaksın. Kontrolü eline aldığında, hedeflerine ulaşacaksın. Otoriten artacak."
+      tr: {
+        past: "Geçmiş: Düzen, disiplin ve otoriteyle yoğrulmuş bir geçmiş. Kuralları belirlemiş ve hayatını yapılandırmaya çalışmışsın.",
+        present: "Şimdi: Kararlarında sağlam ve kararlı olman gereken bir dönemdesin. Sorumluluklarını üstlenmekten çekinme. Güç seninle!",
+        future: "Gelecek: Kendi hayatının lideri olacaksın. Kontrolü eline aldığında, hedeflerine ulaşacaksın. Otoriten artacak."
+      },
+      en: {
+        past: "Past: Your past has been shaped by order, discipline, and authority. You have set the rules and tried to structure your life.",
+        present: "Present: This is a period when you need to be strong and decisive in your decisions. Do not hesitate to take on responsibilities. The power is with you!",
+        future: "Future: You will become the leader of your own life. When you take control, you will achieve your goals. Your authority will increase."
+      }
     },
     emoji: "🏛️"
   },
   {
-    name: "Aşıklar",
+    name: {tr:"Aşıklar",en:"The Lovers"},
     img: "https://i.pinimg.com/1200x/66/a8/e7/66a8e7aa137882ced8daa6e0e3063cd9.jpg",
     meanings: {
-      past: "Geçmiş: Kalbinle önemli bir seçim yaptığın veya aşk hayatında dönüm noktası yaşadığın bir dönem var.",
-      present: "Şimdi: Şu an ilişkiler, dostluklar ya da iş ortaklıkları ön planda. Seçimlerinde kalbini dinle. Gerçek sevgiyi bulabilirsin.",
-      future: "Gelecek: Aşk hayatında büyük bir fırsat, yepyeni bir ilişki ya da mevcut ilişkide güçlenme yaşanacak. Seçimlerinin sonuçları seni mutlu edecek."
+      tr: {
+        past: "Geçmiş: Kalbinle önemli bir seçim yaptığın veya aşk hayatında dönüm noktası yaşadığın bir dönem var.",
+        present: "Şimdi: Şu an ilişkiler, dostluklar ya da iş ortaklıkları ön planda. Seçimlerinde kalbini dinle. Gerçek sevgiyi bulabilirsin.",
+        future: "Gelecek: Aşk hayatında büyük bir fırsat, yepyeni bir ilişki ya da mevcut ilişkide güçlenme yaşanacak. Seçimlerinin sonuçları seni mutlu edecek."
+      },
+      en: {
+        past: "Past: There is a period when you made an important decision with your heart or reached a turning point in your love life.",
+        present: "Present: Relationships, friendships, or partnerships are at the forefront right now. Listen to your heart in your choices. You can find true love.",
+        future: "Future: A great opportunity in love, a brand new relationship, or strengthening in the current relationship is at hand. The results of your choices will make you happy."
+      }
     },
     emoji: "💘"
   },
   {
-    name: "Güç",
+    name: {tr:"Güç",en:"Strength"},
     img: "https://i.pinimg.com/1200x/45/30/75/4530755737a4f036e5db8efa81811d34.jpg",
     meanings: {
-      past: "Geçmiş: Zorluklar karşısında sabırlı ve dirençli olmuşsun. İçsel gücünü ortaya koymuş, sakinlikle her şeyi aşmışsın.",
-      present: "Şimdi: Kendine güvenin ve sabrın en büyük silahın. Zorluklara karşı dimdik durmaya devam et. Kontrol sende.",
-      future: "Gelecek: Yakında cesaretinle herkesin hayranlığını kazanacaksın. Engelleri aşacak ve büyük bir zafer elde edeceksin."
+      tr: {
+        past: "Geçmiş: Zorluklar karşısında sabırlı ve dirençli olmuşsun. İçsel gücünü ortaya koymuş, sakinlikle her şeyi aşmışsın.",
+        present: "Şimdi: Kendine güvenin ve sabrın en büyük silahın. Zorluklara karşı dimdik durmaya devam et. Kontrol sende.",
+        future: "Gelecek: Yakında cesaretinle herkesin hayranlığını kazanacaksın. Engelleri aşacak ve büyük bir zafer elde edeceksin."
+      },
+      en: {
+        past: "Past: You have been patient and resilient in the face of difficulties. You have shown your inner strength and overcome everything calmly.",
+        present: "Present: Your self-confidence and patience are your biggest weapons. Keep standing tall against challenges. You are in control.",
+        future: "Future: Soon you will win everyone's admiration with your courage. You will overcome obstacles and achieve a great victory."
+      }
     },
     emoji: "🦁"
   },
   {
-    name: "Ermiş",
+    name: {tr:"Ermiş",en:"The Hermit"},
     img: "https://i.pinimg.com/1200x/02/a7/79/02a779d8c755e082be57f38a9832d141.jpg",
     meanings: {
-      past: "Geçmiş: İçsel yolculuk, yalnızlık ve bilgelik arayışı geçmişinde önemli bir rol oynamış.",
-      present: "Şimdi: Şu sıralar daha fazla içe dönüyor, hayatının anlamını ve yönünü sorguluyorsun. Ruhunu dinle.",
-      future: "Gelecek: Yakında derin bir içsel aydınlanma yaşayacaksın. Doğru yolu bulacak, huzura kavuşacaksın."
+      tr: {
+        past: "Geçmiş: İçsel yolculuk, yalnızlık ve bilgelik arayışı geçmişinde önemli bir rol oynamış.",
+        present: "Şimdi: Şu sıralar daha fazla içe dönüyor, hayatının anlamını ve yönünü sorguluyorsun. Ruhunu dinle.",
+        future: "Gelecek: Yakında derin bir içsel aydınlanma yaşayacaksın. Doğru yolu bulacak, huzura kavuşacaksın."
+      },
+      en: {
+        past: "Past: Inner journey, loneliness, and search for wisdom have played an important role in your past.",
+        present: "Present: You are turning inward more these days, questioning the meaning and direction of your life. Listen to your soul.",
+        future: "Future: Soon you will experience a deep inner enlightenment. You will find the right path and attain peace."
+      }
     },
     emoji: "🧘"
   }
 ];
+// Zodiac logic
 const burclar = [
   {ad:"Oğlak",    bas:"01-01", bit:"01-20"},
   {ad:"Kova",     bas:"01-21", bit:"02-19"},
@@ -463,32 +660,64 @@ const burclar = [
   {ad:"Oğlak",    bas:"12-22", bit:"12-31"}
 ];
 const gunesYorum = {
-  "Koç":"Her koşulda liderlik enerjin yüksek, girişimci ve cesur yanın seni öne çıkarıyor.",
-  "Boğa":"Sabırlı ve güvenli adımlarınla huzuru ve refahı arıyorsun.",
-  "İkizler":"Fikirlerin ve iletişimin çok güçlü, her zaman yeniye açıksın.",
-  "Yengeç":"Sezgisel ve duygusalsın, aile senin için önemli.",
-  "Aslan":"Sahnede olmayı seviyorsun, yaratıcı ve özgüvenlisin.",
-  "Başak":"Detaycı ve analitiksin, mükemmeli arıyorsun.",
-  "Terazi":"Denge ve güzellik peşindesin, ilişkiler ön planda.",
-  "Akrep":"Tutkulusun ve gizemli tarafınla değişimi başlatırsın.",
-  "Yay":"İyimser, maceracı ve özgür ruhlusun.",
-  "Oğlak":"Disiplinli ve kararlısın, hedeflerine emin adımlarla ilerlersin.",
-  "Kova":"Yenilikçi ve orijinal düşüncelisin.",
-  "Balık":"Hayal gücün ve empatin çok yüksek, ruhsal yönün baskın."
+  tr: {
+    "Koç":"Her koşulda liderlik enerjin yüksek, girişimci ve cesur yanın seni öne çıkarıyor.",
+    "Boğa":"Sabırlı ve güvenli adımlarınla huzuru ve refahı arıyorsun.",
+    "İkizler":"Fikirlerin ve iletişimin çok güçlü, her zaman yeniye açıksın.",
+    "Yengeç":"Sezgisel ve duygusalsın, aile senin için önemli.",
+    "Aslan":"Sahnede olmayı seviyorsun, yaratıcı ve özgüvenlisin.",
+    "Başak":"Detaycı ve analitiksin, mükemmeli arıyorsun.",
+    "Terazi":"Denge ve güzellik peşindesin, ilişkiler ön planda.",
+    "Akrep":"Tutkulusun ve gizemli tarafınla değişimi başlatırsın.",
+    "Yay":"İyimser, maceracı ve özgür ruhlusun.",
+    "Oğlak":"Disiplinli ve kararlısın, hedeflerine emin adımlarla ilerlersin.",
+    "Kova":"Yenilikçi ve orijinal düşüncelisin.",
+    "Balık":"Hayal gücün ve empatin çok yüksek, ruhsal yönün baskın."
+  },
+  en: {
+    "Koç":"Your leadership energy is always high, your entrepreneurial and brave side makes you stand out.",
+    "Boğa":"You seek peace and prosperity with your patient and secure steps.",
+    "İkizler":"Your ideas and communication are very strong, you are always open to the new.",
+    "Yengeç":"You are intuitive and emotional, family is important to you.",
+    "Aslan":"You love being on stage, you are creative and confident.",
+    "Başak":"You are detail-oriented and analytical, always seeking perfection.",
+    "Terazi":"You seek balance and beauty, relationships are at the forefront.",
+    "Akrep":"You are passionate and with your mysterious side, you initiate change.",
+    "Yay":"You are optimistic, adventurous, and a free spirit.",
+    "Oğlak":"You are disciplined and determined, progressing toward your goals step by step.",
+    "Kova":"You are innovative and original in your thinking.",
+    "Balık":"Your imagination and empathy are very high, your spiritual side is prominent."
+  }
 };
 const ayYorum = {
-  "Koç":"Duyguların ani değişebilir; tepkilerini dengelemen önemli.",
-  "Boğa":"Duygusal güvenlik ve huzur arayışındasın.",
-  "İkizler":"Duygularını konuşarak ve yazarak rahatlatırsın.",
-  "Yengeç":"Duygularınla hareket edersin, aileyle yakın olmak sana iyi gelir.",
-  "Aslan":"Duygusal olarak ilgi ve beğeni beklersin.",
-  "Başak":"Küçük şeyler seni mutlu ya da huzursuz edebilir.",
-  "Terazi":"İlişkilerde uyum ve huzur ararsın.",
-  "Akrep":"Duygularında derinlik ve yoğunluk hakim.",
-  "Yay":"Özgürlük, bağımsızlık ve hareket alanı istersin.",
-  "Oğlak":"Soğukkanlı ve mesafeli görünebilirsin.",
-  "Kova":"Duygusal olarak mantıklı ve tarafsız davranırsın.",
-  "Balık":"Empatik ve hassassın, başkalarının hislerini kolayca hissedersin."
+  tr: {
+    "Koç":"Duyguların ani değişebilir; tepkilerini dengelemen önemli.",
+    "Boğa":"Duygusal güvenlik ve huzur arayışındasın.",
+    "İkizler":"Duygularını konuşarak ve yazarak rahatlatırsın.",
+    "Yengeç":"Duygularınla hareket edersin, aileyle yakın olmak sana iyi gelir.",
+    "Aslan":"Duygusal olarak ilgi ve beğeni beklersin.",
+    "Başak":"Küçük şeyler seni mutlu ya da huzursuz edebilir.",
+    "Terazi":"İlişkilerde uyum ve huzur ararsın.",
+    "Akrep":"Duygularında derinlik ve yoğunluk hakim.",
+    "Yay":"Özgürlük, bağımsızlık ve hareket alanı istersin.",
+    "Oğlak":"Soğukkanlı ve mesafeli görünebilirsin.",
+    "Kova":"Duygusal olarak mantıklı ve tarafsız davranırsın.",
+    "Balık":"Empatik ve hassassın, başkalarının hislerini kolayca hissedersin."
+  },
+  en: {
+    "Koç":"Your emotions can change suddenly; it's important to balance your reactions.",
+    "Boğa":"You seek emotional security and peace.",
+    "İkizler":"You ease your feelings by talking and writing.",
+    "Yengeç":"You act with your emotions, being close to family is good for you.",
+    "Aslan":"Emotionally, you expect attention and appreciation.",
+    "Başak":"Small things can make you happy or uneasy.",
+    "Terazi":"You seek harmony and peace in relationships.",
+    "Akrep":"There is depth and intensity in your emotions.",
+    "Yay":"You want freedom, independence, and room to move.",
+    "Oğlak":"You may appear cool and distant.",
+    "Kova":"You behave logically and impartially in your emotions.",
+    "Balık":"You are empathetic and sensitive, you easily feel others' emotions."
+  }
 };
 function gunesBurcu(dateStr){
   if(!dateStr) return '';
@@ -519,21 +748,17 @@ function ayBurcu(dateStr){
   return "Başak";
 }
 let selected=[], phase=0, gunesB, ayB, gunesY, ayY;
-const phaseTitles=[
-  "Geçmiş için bir kart seç",
-  "Şimdiki zaman için bir kart seç",
-  "Gelecek için bir kart seç"
-];
 document.getElementById('devamBtn').onclick=()=>{
   const fn=document.getElementById('fullName').value.trim();
   const bd=document.getElementById('birthDate').value;
   const bt=document.getElementById('birthTime').value;
-  if(!fn||!bd){alert("Ad Soyad ve Doğum Tarihi gerekli.");return;}
+  if(!fn||!bd){alert(L[LANG].labelName+" ve "+L[LANG].labelBirthDate+" "+(LANG=="tr"?"gerekli.":"are required."));return;}
   gunesB=gunesBurcu(bd); ayB=bt?ayBurcu(bd):null;
-  gunesY=gunesB&&gunesYorum[gunesB]?gunesYorum[gunesB]:"";
-  ayY=ayB&&ayYorum[ayB]?ayYorum[ayB]:"";
+  gunesY=gunesB&&gunesYorum[LANG][gunesB]?gunesYorum[LANG][gunesB]:"";
+  ayY=ayB&&ayYorum[LANG][ayB]?ayYorum[LANG][ayB]:"";
   document.getElementById('formArea').classList.add('hidden');
   document.getElementById('selectArea').classList.remove('hidden');
+  phase=0;selected=[];
   renderDeck();
 };
 function renderDeck(){
@@ -550,14 +775,14 @@ function renderDeck(){
     div.style.minWidth = cardW+"px";
     div.style.maxWidth = cardW+"px";
     if(!sel){
-      div.innerHTML=`<div class="tarot-img-box" style="width:${cardW-2}px;min-width:${cardW-2}px;max-width:${cardW-2}px;"><div class="flip-anim"><img class="tarot-back-img back" src="${tarotBackIMG}" alt="Kart Arkası" loading="lazy"></div></div>`;
+      div.innerHTML=`<div class="tarot-img-box" style="width:${cardW-2}px;min-width:${cardW-2}px;max-width:${cardW-2}px;"><div class="flip-anim"><img class="tarot-back-img back" src="${tarotBackIMG}" alt="Card Back" loading="lazy"></div></div>`;
       div.onclick=()=>pick(i,div);
     }else{
-      div.innerHTML=`<div class="tarot-img-box" style="width:${cardW-2}px;min-width:${cardW-2}px;max-width:${cardW-2}px;"><div class="flip-anim flipped"><img class="front" src="${c.img}" alt="${c.name}" loading="lazy"></div></div><div class="tarot-label">${c.name}</div>`;
+      div.innerHTML=`<div class="tarot-img-box" style="width:${cardW-2}px;min-width:${cardW-2}px;max-width:${cardW-2}px;"><div class="flip-anim flipped"><img class="front" src="${c.img}" alt="${c.name[LANG]}" loading="lazy"></div></div><div class="tarot-label">${c.name[LANG]}</div>`;
     }
     deck.appendChild(div);
   });
-  document.getElementById('phaseTitle').textContent=phaseTitles[phase]||"Kartların ve yorumları:";
+  document.getElementById('phaseTitle').textContent=L[LANG].phase[phase]||L[LANG].phase[3];
 }
 window.addEventListener("resize", ()=>{if(document.getElementById("selectArea")&&!document.getElementById("selectArea").classList.contains("hidden")) renderDeck();});
 function pick(i,div){
@@ -574,13 +799,15 @@ function showResults(){
   document.getElementById('selectArea').classList.add('hidden');
   const res=document.getElementById('resultArea');
   res.classList.remove('hidden');
-  let burcInfo = `<div class='hint-burc'>🔆 <b>Güneş Burcunuz: <span style='color:#ffd986'>${gunesB||"-"}</span></b>`;
+  let gunesLabel = ZODIAC_NAMES[LANG][gunesB]||gunesB;
+  let ayLabel = ayB?ZODIAC_NAMES[LANG][ayB]:null;
+  let burcInfo = `<div class='hint-burc'>🔆 <b>${L[LANG].burcGunes}: <span style='color:#ffd986'>${gunesLabel||"-"}</span></b>`;
   if(gunesY) burcInfo += `<br><i>🌞 ${gunesY}</i>`;
   if(ayB){
-    burcInfo += `<br><b>🌚 Ay Burcunuz: <span style='color:#ffefc0'>${ayB}</span></b>`;
+    burcInfo += `<br><b>🌚 ${L[LANG].burcAy}: <span style='color:#ffefc0'>${ayLabel}</span></b>`;
     if(ayY) burcInfo += `<br><i>${ayY}</i>`;
   }else{
-    burcInfo += `<br><span style='color:#bcae7b'>Doğum saatinizi girerseniz ay burcunuza özel yorum da eklenir.</span>`;
+    burcInfo += `<br><span style='color:#bcae7b'>${L[LANG].burcEk}</span>`;
   }
   burcInfo += `</div>`;
   let detailCards = selected.map((i,k)=>{
@@ -588,29 +815,25 @@ function showResults(){
     let period = (k==0) ? "past" : (k==1) ? "present" : "future";
     return `<div class="tarot-card open" style="display:flex; flex-direction:column; align-items:center; width:100%;max-width:320px;margin:auto;">
         <div class="tarot-img-box" style="width:100%;max-width:320px;"><img src="${c.img}" alt="" loading="lazy"></div>
-        <div class="tarot-label">${c.name}</div>
-        <div class="card-meaning">${c.meanings[period]}</div>
+        <div class="tarot-label">${c.name[LANG]}</div>
+        <div class="card-meaning">${c.meanings[LANG][period]}</div>
       </div>`;
   }).join('');
-  let kartIsimleri = selected.map(i=>tarotCards[i].name).join(', ');
+  let kartIsimleri = selected.map(i=>tarotCards[i].name[LANG]).join(', ');
   let kartEmojileri = selected.map(i=>tarotCards[i].emoji).join(' ');
-  let ozgunOzet = `✨ <b>Tarot Açılımı Özet Yorumun:</b><br><br>
-    ${kartEmojileri} <b>${kartIsimleri}</b> kartlarının açılımı, Güneş burcun olan <b>${gunesB}</b> ve ${ayB?`Ay burcun olan <b>${ayB}</b>`:''} enerjileriyle birleşince;
+  let ozgunOzet = `✨ <b>${L[LANG].summary}</b><br><br>
+    ${kartEmojileri} <b>${kartIsimleri}</b> ${LANG=="tr"?"kartlarının açılımı":"cards' spread"}, ${L[LANG].burcGunes.toLowerCase()} <b>${gunesLabel}</b> ${ayB?` ${L[LANG].burcAy.toLowerCase()} <b>${ayLabel}</b>`:''} enerjileriyle birleşince;
     <br><br>
-    <b>Geçmişte</b>, ${tarotCards[selected[0]].meanings.past.replace(/^[^:]+: /,'')}, 
-    <br><b>şu anda</b> ${tarotCards[selected[1]].meanings.present.replace(/^[^:]+: /,'')},
-    <br><b>gelecekte ise</b> ${tarotCards[selected[2]].meanings.future.replace(/^[^:]+: /,'')}.<br><br>
-    Burçların etkisiyle birlikte bu süreçte 
-    <b>${gunesY}</b> ${ayB && ayY ? " ve ayrıca duygularında " + ayY : ""}
-    öne çıkıyor. Tüm açılım, seni ruhsal olarak güçlendiren, hayatındaki büyük değişimi destekleyen ve kendine inancını tazeleyen bir enerji yayıyor. 🧿💫
-    <br><br><b>Evrenin sana mesajı:</b> 
-    Korkusuzca ilerle, kendi iç sesini ve gücünü dinle; aşk, bolluk ve bilgelik seni bekliyor!`;
+    <b>${LANG=="tr"?"Geçmişte":"In the past"}</b>, ${tarotCards[selected[0]].meanings[LANG].past.replace(/^[^:]+: /,'')}, 
+    <br><b>${LANG=="tr"?"şu anda":"at present"}</b> ${tarotCards[selected[1]].meanings[LANG].present.replace(/^[^:]+: /,'')},
+    <br><b>${LANG=="tr"?"gelecekte ise":"and for the future"}</b> ${tarotCards[selected[2]].meanings[LANG].future.replace(/^[^:]+: /,'')}.<br><br>
+    ${L[LANG].evren}`;
   res.innerHTML='<div class="result-area-outer">';
-  res.innerHTML += '<div class="result-title">🃏 Çektiğin Kartlar ve Uzun Yorumlar</div>';
+  res.innerHTML += `<div class="result-title">${L[LANG].card_result}</div>`;
   res.innerHTML += burcInfo;
   res.innerHTML += '<div class="result-area-inner">'+detailCards+'</div>';
   res.innerHTML += `<div class="summary-yorum">${ozgunOzet}</div></div>`;
-  document.getElementById('phaseTitle').textContent="Kartların ve yorumları:";
+  document.getElementById('phaseTitle').textContent=L[LANG].phase[3];
 }
 </script>
 </body>
