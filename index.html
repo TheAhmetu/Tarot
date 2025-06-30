@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3 Kartlık Tarot Açılımı</title>
+<title>Tarot Falı - 3 Kartlık Açılım</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <style>
 body {
@@ -17,7 +17,7 @@ body {
 h1 {
   color: #ffe9a8;
   font-family: 'Playfair Display', serif;
-  font-size: 3.1rem;
+  font-size: 2.7rem;
   margin-top:45px;
   letter-spacing:2.5px;
   background: linear-gradient(90deg, #ffecb3, #ffdf95 60%, #ffe179 100%);
@@ -25,24 +25,114 @@ h1 {
   -webkit-text-fill-color: transparent; text-fill-color: transparent;
   text-shadow:0 8px 40px #ffefbe33, 0 2px 6px #6c5a2a33;
 }
+.giris-aciklama {
+  color: #fbeec8;
+  font-size: 1.25em;
+  margin: 24px auto 35px auto;
+  max-width: 510px;
+  background: #201a24d8;
+  border-radius: 14px;
+  padding: 18px 23px;
+  text-align: center;
+  box-shadow: 0 1px 8px #554e3559;
+  line-height: 1.6;
+  letter-spacing: .02em;
+}
+.giris-secimler {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+.giris-kutu {
+  background: linear-gradient(125deg,#2a2237 68%,#443073 100%);
+  color: #ffe9a8;
+  border-radius: 17px;
+  padding: 34px 22px 30px 22px;
+  font-size: 1.2em;
+  font-weight: bold;
+  min-width: 200px; min-height:120px;
+  max-width: 300px;
+  box-shadow: 0 2px 17px #342d4641,0 1px 5px #fff1;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing:.5px;
+  position:relative;
+  transition:box-shadow .15s, filter .18s, background .13s;
+  border:2.2px solid #3c3158;
+  outline:none;
+  user-select:none;
+}
+.giris-kutu:not(.disabled):hover {
+  background: linear-gradient(125deg,#5a4386 68%,#8870c6 100%);
+  box-shadow: 0 4px 20px #9e7be040,0 1px 8px #eeddbe3a;
+  filter: brightness(1.09);
+}
+.giris-kutu .emoji {font-size:2em; display:block; margin-bottom:10px;}
+.giris-kutu.disabled {
+  background: linear-gradient(120deg,#2a223755 70%,#383052 100%);
+  color:#d5c7a7cc;
+  cursor: not-allowed;
+  filter: grayscale(0.33) opacity(0.8);
+  border:2.2px dashed #574e66;
+}
+.giris-kutu .premium-etiket {
+  position:absolute; top:11px; right:12px;
+  background: linear-gradient(90deg,#f9e9b2,#fae79e 70%,#e8cf8b);
+  color: #6d5b19;
+  font-size:.88em;
+  border-radius:8px;
+  padding:3px 11px 4px 9px;
+  font-weight:600;
+  letter-spacing:.03em;
+  box-shadow:0 1px 5px #b99d2a33;
+}
+@media (max-width:750px){
+  .giris-secimler {gap:13px;}
+  .giris-kutu {padding:22px 7px 19px 7px;font-size:1.05em;min-width:140px;}
+}
+@media (max-width:600px){
+  h1{font-size:1.15rem;}
+  .main-content{padding-bottom:15px;}
+  .giris-aciklama{font-size:.99em;max-width:98vw;}
+  .giris-kutu{font-size:.93em;min-width:110px;}
+}
 .form-area, #selectArea, #resultArea { margin-top:30px; }
+.input-row {
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-area label {
+  color:#ffedc0;
+  font-size:18px;
+  display:block;
+  text-align:left;
+  margin-bottom:2px;
+  margin-left:4px;
+  font-weight:600;
+  letter-spacing: .01em;
+}
 .form-area input {
-  margin: 11px 0;
   font-size: 23px;
   border-radius: 12px;
   border: none;
   padding: 15px 20px;
   outline: none;
-  width: 300px;
+  width: 100%;
   background: #18122d;
   color: #ffedc0;
   box-shadow: 0 1px 15px #1e164877;
+  margin-bottom: 0;
 }
 .form-area input[type=date], .form-area input[type=time] { color: #dac490; }
 .btn {
   padding: 20px 56px;
   font-size: 26px;
-  margin-top:22px;
+  margin-top:32px;
   background: linear-gradient(90deg,#8f78f7,#4322a9 80%,#be84ff);
   color: #fffde0;
   border: none; border-radius: 17px;
@@ -52,17 +142,30 @@ h1 {
   letter-spacing:.8px;
   box-shadow:0 6px 20px #59459d66,0 1px 3px #fff2;
   transition: filter .17s;
+  width: 100%;
+  max-width: 350px;
+  display: block;
+  margin-left:auto; margin-right:auto;
 }
 .btn:hover { filter:brightness(1.13) drop-shadow(0 2px 8px #7f5bff22); }
-
 .deck {
   width: 100%;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: flex-end;
   gap: 3vw;
   margin: 32px auto 18px;
+}
+@media (max-width: 700px) {
+  .deck {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px 0;
+    width: 100%;
+    max-width: 320px;
+    margin: 24px auto 10px auto;
+  }
 }
 .tarot-card {
   background: none!important;
@@ -149,6 +252,14 @@ h1 {
   margin: auto;
   padding-bottom: 28px;
 }
+@media (max-width: 1000px) {
+  .result-area-inner {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    max-width: 340px;
+    padding-bottom:10px;
+  }
+}
 .card-meaning {
   margin:20px 10px 0 10px;
   color:#fff6e0;
@@ -197,29 +308,46 @@ h1 {
   transform: rotateY(180deg);
   z-index: 1;
 }
-
-/* Responsive, hem seçim hem sonuç ekranı */
-@media (max-width:1000px){
-  .main-content{max-width:99vw;}
-  .result-area-inner {grid-template-columns: repeat(1,minmax(210px,1fr)); gap:22px;}
-}
-@media (max-width:600px){
-  .tarot-label {font-size: 13px;}
-  .card-meaning{font-size:12px; min-height:26px;}
-  .deck {gap: 3vw;}
-  h1 {font-size: 1.2rem;}
-  .summary-yorum {padding: 16px;}
-}
 </style>
 </head>
 <body>
 <div class="main-content">
-  <h1>✨ 3 Kartlık Tarot Açılımı 🔮</h1>
-  <div class="form-area" id="formArea">
-    <div class="input-row"><input type="text" id="fullName" placeholder="Ad Soyad"></div>
-    <div class="input-row"><input type="date" id="birthDate"></div>
-    <div class="input-row"><input type="time" id="birthTime" placeholder="Opsiyonel: Doğum Saati"></div>
-    <div><button id="devamBtn" class="btn">Devam Et 🧿</button></div>
+  <h1>✨ Hoş Geldiniz!</h1>
+  <div class="giris-aciklama">
+    <b>Tarot Falı ile geleceğinize ışık tutun.</b><br>
+    Klasik tarot destesiyle, enerjinizi ve kaderinizi birlikte keşfedelim.<br>
+    Şu anda <b>3 Kartlık Açılım</b> hizmetimiz açık. Diğer açılımlar çok yakında burada olacak!
+  </div>
+  <div id="girisSecim" class="giris-secimler">
+    <div class="giris-kutu" id="secim-3kart" tabindex="0">
+      <span class="emoji">🔮</span>
+      3 Kartlık Tarot Açılımı
+    </div>
+    <div class="giris-kutu disabled" tabindex="-1">
+      <span class="emoji">💞</span>
+      Aşk Açılımı
+      <span class="premium-etiket">Premium Yakında</span>
+    </div>
+    <div class="giris-kutu disabled" tabindex="-1">
+      <span class="emoji">💼</span>
+      Kariyer Açılımı
+      <span class="premium-etiket">Premium Yakında</span>
+    </div>
+  </div>
+  <div class="form-area hidden" id="formArea">
+    <div class="input-row">
+      <label for="fullName">Ad Soyad</label>
+      <input type="text" id="fullName" placeholder="Ad Soyad">
+    </div>
+    <div class="input-row">
+      <label for="birthDate">Doğum Tarihi</label>
+      <input type="date" id="birthDate">
+    </div>
+    <div class="input-row">
+      <label for="birthTime">Doğum Saati (opsiyonel)</label>
+      <input type="time" id="birthTime" placeholder="Doğum Saati (opsiyonel)">
+    </div>
+    <button id="devamBtn" class="btn">Devam Et 🧿</button>
   </div>
   <div id="selectArea" class="hidden">
     <div id="phaseTitle" style="color:#ffecc9;font-size:29px;margin-bottom:26px;text-shadow:0 1px 12px #232a3b;">Geçmiş için bir kart seç</div>
@@ -228,6 +356,12 @@ h1 {
   <div id="resultArea" class="result-area hidden"></div>
 </div>
 <script>
+// Açılım seçimi
+document.getElementById('secim-3kart').onclick = function() {
+  document.getElementById('girisSecim').classList.add('hidden');
+  document.getElementById('formArea').classList.remove('hidden');
+};
+// Tarot kartları ve fonksiyonlar aynı şekilde devam
 const tarotBackIMG = "https://i.pinimg.com/1200x/de/6d/78/de6d78f74e682c255b17ba7b2a0b9922.jpg";
 const tarotCards = [
   {
@@ -403,11 +537,9 @@ document.getElementById('devamBtn').onclick=()=>{
 function renderDeck(){
   const deck=document.getElementById('deck');
   deck.innerHTML='';
-  // Kart sayısına göre boyutlar
   let cardCount = tarotCards.length;
-  let available = Math.min(window.innerWidth*0.96, 1200);
-  let gap = cardCount>1 ? (available*0.04)/(cardCount-1) : 0;
-  let cardW = Math.max(Math.min((available-(gap*(cardCount-1)))/cardCount, 190),70);
+  let isMobile = window.innerWidth <= 700;
+  let cardW = isMobile ? Math.max(window.innerWidth*0.75,90) : Math.max(Math.min((window.innerWidth*0.85-(3*cardCount))/cardCount, 190),70);
   tarotCards.forEach((c,i)=>{
     const sel=selected.includes(i);
     const div=document.createElement('div');
